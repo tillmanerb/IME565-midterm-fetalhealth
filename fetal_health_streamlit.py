@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy
 import pickle
 import warnings
 import numpy as np
@@ -111,7 +110,7 @@ if file_upload is not None:
     with tab3:
         st.write("### Classification Report")
         class_df = pd.read_csv(f'class_report_{suffix}.csv')
-        st.write(class_df.style.background_gradient(cmap='RdBu', axis=1).format(precision=2))
+        st.write(class_df.style.background_gradient(cmap='RdBu', axis=1).format(precision=2)) #Used Gemini to assist with color coding here
         st.caption("Range of predictions with confidence intervals.")
         
 else:

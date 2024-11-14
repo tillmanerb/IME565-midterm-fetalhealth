@@ -43,9 +43,8 @@ file_upload = st.sidebar.file_uploader(label="Upload your data", help="File must
 st.sidebar.warning(body = " *Ensure your data exactly matches the format outlined below*", icon = "⚠️")
 st.sidebar.write(sample_df.head(5))
 
-file_upload = pd.read_csv('fetal_health_user.csv')
-
 if file_upload is not None:
+    user_df = pd.read_csv(file_upload)
     st.success(body = "*CSV file uploaded successfully.*", icon="✅")
     model_selection = st.sidebar.radio(label = 'Choose Model for Prediction', options = ['Random Forest',
                                                             'Decision Tree',
@@ -66,7 +65,6 @@ if file_upload is not None:
         clf = vote_model
         suffix = 'vot'
 
-    user_df = file_upload
     user_pred = clf.predict(user_df)
     user_pred = pd.DataFrame(user_pred)
     pred_df = pd.DataFrame(clf.predict_proba(user_df))
@@ -110,7 +108,15 @@ if file_upload is not None:
     with tab3:
         st.write("### Classification Report")
         class_df = pd.read_csv(f'class_report_{suffix}.csv')
-        st.write(class_df.style.background_gradient(cmap='RdBu', axis=1).format(precision=2)) #Used Gemini to assist with color coding here
+        if suffix == "dt":
+            cmap_str = 'PiYG'
+        elif suffix == 'rf':
+            cmap_str = 'PRGn'
+        elif suffix == 'ada':
+            cmap_str = 'PuOr'
+        else:
+            cmap_str = 'RdBu'
+        st.write(class_df.style.background_gradient(cmap=cmap_str, axis=1).format(precision=2)) #Used Gemini to assist with color coding here
         st.caption("Range of predictions with confidence intervals.")
         
 else:

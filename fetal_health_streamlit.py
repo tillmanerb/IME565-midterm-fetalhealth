@@ -12,7 +12,7 @@ st.image('fetal_health_image.gif', use_column_width = True,
 @st.cache_resource
 def load_model():
     model_pickle = open('decision_tree_pickle.pkl', 'rb') 
-    dt_model = pickle.load(model_pickle) 
+    dt_model = pickle.load(model_pickle)
     model_pickle.close()
 
     model_pickle = open('random_forest_pickle.pkl', 'rb') 
